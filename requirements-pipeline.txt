@@ -1,0 +1,4 @@
+# Only needed to regenerate outputs locally with `bash run_all.sh` (not needed to deploy the app).
+numpy>=2.0
+pandas>=2.2
+scikit-learn>=1.5

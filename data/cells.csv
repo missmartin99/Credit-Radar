@@ -1,0 +1,121 @@
+cell,cell_code,loc,loc_name,name,lat,lon,n
+0,MN-A,0,Malviya Nagar,Malviya Nagar · Lane A,28.5385,77.212,73
+1,MN-B,0,Malviya Nagar,Malviya Nagar · Lane B,28.5385,77.206,83
+2,MN-C,0,Malviya Nagar,Malviya Nagar · Lane C,28.5325,77.212,80
+3,MN-D,0,Malviya Nagar,Malviya Nagar · Lane D,28.5325,77.206,57
+4,SK-A,1,Saket,Saket · Lane A,28.5275,77.2096,77
+5,SK-B,1,Saket,Saket · Lane B,28.5275,77.2036,72
+6,SK-C,1,Saket,Saket · Lane C,28.5215,77.2096,71
+7,SK-D,1,Saket,Saket · Lane D,28.5215,77.2036,65
+8,HK-A,2,Hauz Khas,Hauz Khas · Lane A,28.5524,77.2031,75
+9,HK-B,2,Hauz Khas,Hauz Khas · Lane B,28.5524,77.1971,78
+10,HK-C,2,Hauz Khas,Hauz Khas · Lane C,28.5464,77.2031,64
+11,HK-D,2,Hauz Khas,Hauz Khas · Lane D,28.5464,77.1971,72
+12,LN-A,3,Lajpat Nagar,Lajpat Nagar · Lane A,28.5707,77.2462,71
+13,LN-B,3,Lajpat Nagar,Lajpat Nagar · Lane B,28.5707,77.2402,91
+14,LN-C,3,Lajpat Nagar,Lajpat Nagar · Lane C,28.5647,77.2462,68
+15,LN-D,3,Lajpat Nagar,Lajpat Nagar · Lane D,28.5647,77.2402,67
+16,KJ-A,4,Kalkaji,Kalkaji · Lane A,28.5435,77.2618,64
+17,KJ-B,4,Kalkaji,Kalkaji · Lane B,28.5435,77.2558,75
+18,KJ-C,4,Kalkaji,Kalkaji · Lane C,28.5375,77.2618,74
+19,KJ-D,4,Kalkaji,Kalkaji · Lane D,28.5375,77.2558,70
+20,NP-A,5,Nehru Place,Nehru Place · Lane A,28.5521,77.2563,74
+21,NP-B,5,Nehru Place,Nehru Place · Lane B,28.5521,77.2503,61
+22,NP-C,5,Nehru Place,Nehru Place · Lane C,28.5461,77.2563,47
+23,NP-D,5,Nehru Place,Nehru Place · Lane D,28.5461,77.2503,67
+24,KB-A,6,Karol Bagh,Karol Bagh · Lane A,28.6544,77.1937,69
+25,KB-B,6,Karol Bagh,Karol Bagh · Lane B,28.6544,77.1877,70
+26,KB-C,6,Karol Bagh,Karol Bagh · Lane C,28.6484,77.1937,77
+27,KB-D,6,Karol Bagh,Karol Bagh · Lane D,28.6484,77.1877,72
+28,RG-A,7,Rajouri Garden,Rajouri Garden · Lane A,28.6522,77.1256,76
+29,RG-B,7,Rajouri Garden,Rajouri Garden · Lane B,28.6522,77.1196,69
+30,RG-C,7,Rajouri Garden,Rajouri Garden · Lane C,28.6462,77.1256,57
+31,RG-D,7,Rajouri Garden,Rajouri Garden · Lane D,28.6462,77.1196,67
+32,JP-A,8,Janakpuri,Janakpuri · Lane A,28.6249,77.0908,85
+33,JP-B,8,Janakpuri,Janakpuri · Lane B,28.6249,77.0848,67
+34,JP-C,8,Janakpuri,Janakpuri · Lane C,28.6189,77.0908,68
+35,JP-D,8,Janakpuri,Janakpuri · Lane D,28.6189,77.0848,63
+36,DW-A,9,Dwarka,Dwarka · Lane A,28.5951,77.049,70
+37,DW-B,9,Dwarka,Dwarka · Lane B,28.5951,77.043,55
+38,DW-C,9,Dwarka,Dwarka · Lane C,28.5891,77.049,65
+39,DW-D,9,Dwarka,Dwarka · Lane D,28.5891,77.043,66
+40,LX-A,10,Laxmi Nagar,Laxmi Nagar · Lane A,28.6334,77.2803,65
+41,LX-B,10,Laxmi Nagar,Laxmi Nagar · Lane B,28.6334,77.2743,69
+42,LX-C,10,Laxmi Nagar,Laxmi Nagar · Lane C,28.6274,77.2803,68
+43,LX-D,10,Laxmi Nagar,Laxmi Nagar · Lane D,28.6274,77.2743,57
+44,MV-A,11,Mayur Vihar,Mayur Vihar · Lane A,28.6119,77.2984,62
+45,MV-B,11,Mayur Vihar,Mayur Vihar · Lane B,28.6119,77.2924,82
+46,MV-C,11,Mayur Vihar,Mayur Vihar · Lane C,28.6059,77.2984,68
+47,MV-D,11,Mayur Vihar,Mayur Vihar · Lane D,28.6059,77.2924,70
+48,PV-A,12,Preet Vihar,Preet Vihar · Lane A,28.6444,77.2981,59
+49,PV-B,12,Preet Vihar,Preet Vihar · Lane B,28.6444,77.2921,66
+50,PV-C,12,Preet Vihar,Preet Vihar · Lane C,28.6384,77.2981,59
+51,PV-D,12,Preet Vihar,Preet Vihar · Lane D,28.6384,77.2921,66
+52,RH-A,13,Rohini,Rohini · Lane A,28.719,77.115,55
+53,RH-B,13,Rohini,Rohini · Lane B,28.719,77.109,68
+54,RH-C,13,Rohini,Rohini · Lane C,28.713,77.115,75
+55,RH-D,13,Rohini,Rohini · Lane D,28.713,77.109,71
+56,PT-A,14,Pitampura,Pitampura · Lane A,28.703,77.1344,60
+57,PT-B,14,Pitampura,Pitampura · Lane B,28.703,77.1284,72
+58,PT-C,14,Pitampura,Pitampura · Lane C,28.697,77.1344,51
+59,PT-D,14,Pitampura,Pitampura · Lane D,28.697,77.1284,68
+60,CC-A,15,Chandni Chowk,Chandni Chowk · Lane A,28.6536,77.2333,68
+61,CC-B,15,Chandni Chowk,Chandni Chowk · Lane B,28.6536,77.2273,68
+62,CC-C,15,Chandni Chowk,Chandni Chowk · Lane C,28.6476,77.2333,67
+63,CC-D,15,Chandni Chowk,Chandni Chowk · Lane D,28.6476,77.2273,65
+64,SB-A,16,Sadar Bazar,Sadar Bazar · Lane A,28.6605,77.2136,74
+65,SB-B,16,Sadar Bazar,Sadar Bazar · Lane B,28.6605,77.2076,73
+66,SB-C,16,Sadar Bazar,Sadar Bazar · Lane C,28.6545,77.2136,64
+67,SB-D,16,Sadar Bazar,Sadar Bazar · Lane D,28.6545,77.2076,65
+68,OK-A,17,Okhla,Okhla · Lane A,28.5489,77.2762,79
+69,OK-B,17,Okhla,Okhla · Lane B,28.5489,77.2702,66
+70,OK-C,17,Okhla,Okhla · Lane C,28.5429,77.2762,57
+71,OK-D,17,Okhla,Okhla · Lane D,28.5429,77.2702,74
+72,JN-A,18,Jamia Nagar,Jamia Nagar · Lane A,28.5649,77.283,70
+73,JN-B,18,Jamia Nagar,Jamia Nagar · Lane B,28.5649,77.277,69
+74,JN-C,18,Jamia Nagar,Jamia Nagar · Lane C,28.5589,77.283,65
+75,JN-D,18,Jamia Nagar,Jamia Nagar · Lane D,28.5589,77.277,79
+76,GP-A,19,Govindpuri,Govindpuri · Lane A,28.536,77.267,71
+77,GP-B,19,Govindpuri,Govindpuri · Lane B,28.536,77.261,69
+78,GP-C,19,Govindpuri,Govindpuri · Lane C,28.53,77.267,78
+79,GP-D,19,Govindpuri,Govindpuri · Lane D,28.53,77.261,58
+80,SV-A,20,Sangam Vihar,Sangam Vihar · Lane A,28.5,77.241,79
+81,SV-B,20,Sangam Vihar,Sangam Vihar · Lane B,28.5,77.235,64
+82,SV-C,20,Sangam Vihar,Sangam Vihar · Lane C,28.494,77.241,63
+83,SV-D,20,Sangam Vihar,Sangam Vihar · Lane D,28.494,77.235,62
+84,ME-A,21,Mehrauli,Mehrauli · Lane A,28.523,77.188,85
+85,ME-B,21,Mehrauli,Mehrauli · Lane B,28.523,77.182,76
+86,ME-C,21,Mehrauli,Mehrauli · Lane C,28.517,77.188,62
+87,ME-D,21,Mehrauli,Mehrauli · Lane D,28.517,77.182,67
+88,VK-A,22,Vasant Kunj,Vasant Kunj · Lane A,28.523,77.161,67
+89,VK-B,22,Vasant Kunj,Vasant Kunj · Lane B,28.523,77.155,84
+90,VK-C,22,Vasant Kunj,Vasant Kunj · Lane C,28.517,77.161,62
+91,VK-D,22,Vasant Kunj,Vasant Kunj · Lane D,28.517,77.155,75
+92,MU-A,23,Munirka,Munirka · Lane A,28.5605,77.177,49
+93,MU-B,23,Munirka,Munirka · Lane B,28.5605,77.171,81
+94,MU-C,23,Munirka,Munirka · Lane C,28.5545,77.177,74
+95,MU-D,23,Munirka,Munirka · Lane D,28.5545,77.171,82
+96,UN-A,24,Uttam Nagar,Uttam Nagar · Lane A,28.623,77.058,60
+97,UN-B,24,Uttam Nagar,Uttam Nagar · Lane B,28.623,77.052,61
+98,UN-C,24,Uttam Nagar,Uttam Nagar · Lane C,28.617,77.058,81
+99,UN-D,24,Uttam Nagar,Uttam Nagar · Lane D,28.617,77.052,76
+100,TN-A,25,Tilak Nagar,Tilak Nagar · Lane A,28.643,77.1,65
+101,TN-B,25,Tilak Nagar,Tilak Nagar · Lane B,28.643,77.094,71
+102,TN-C,25,Tilak Nagar,Tilak Nagar · Lane C,28.637,77.1,73
+103,TN-D,25,Tilak Nagar,Tilak Nagar · Lane D,28.637,77.094,62
+104,SH-A,26,Shahdara,Shahdara · Lane A,28.673000000000002,77.293,59
+105,SH-B,26,Shahdara,Shahdara · Lane B,28.673000000000002,77.287,71
+106,SH-C,26,Shahdara,Shahdara · Lane C,28.667,77.293,70
+107,SH-D,26,Shahdara,Shahdara · Lane D,28.667,77.287,71
+108,SE-A,27,Seelampur,Seelampur · Lane A,28.673000000000002,77.273,80
+109,SE-B,27,Seelampur,Seelampur · Lane B,28.673000000000002,77.267,61
+110,SE-C,27,Seelampur,Seelampur · Lane C,28.667,77.273,77
+111,SE-D,27,Seelampur,Seelampur · Lane D,28.667,77.267,63
+112,BU-A,28,Burari,Burari · Lane A,28.753,77.203,64
+113,BU-B,28,Burari,Burari · Lane B,28.753,77.197,72
+114,BU-C,28,Burari,Burari · Lane C,28.747,77.203,75
+115,BU-D,28,Burari,Burari · Lane D,28.747,77.197,78
+116,NA-A,29,Narela,Narela · Lane A,28.8558,77.0959,83
+117,NA-B,29,Narela,Narela · Lane B,28.8558,77.0899,55
+118,NA-C,29,Narela,Narela · Lane C,28.8498,77.0959,72
+119,NA-D,29,Narela,Narela · Lane D,28.8498,77.0899,68

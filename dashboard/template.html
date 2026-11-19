@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Credit Radar: hyperlocal liquidity-need forecast (synthetic demo)</title>
+<style>
+:root{
+  color-scheme: light dark;
+  --surface:#fcfcfb; --card:#ffffff; --line:#e4e3df; --grid:#efeeea;
+  --ink:#0b0b0b; --ink2:#52514e; --ink3:#7a7974;
+  --accent:#2a78d6; --accent-soft:#e6f0fc;
+  --s0:#2a78d6; --s1:#eb6834; --s2:#1baf7a;
+  --bar:#3987e5; --bar-dim:#cde2fb;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --surface:#1a1a19; --card:#222221; --line:#363634; --grid:#2c2c2a;
+    --ink:#f0efec; --ink2:#c3c2b7; --ink3:#99978f; --accent:#6da7ec; --accent-soft:#1d2a3a;
+    --s0:#3987e5; --s1:#d95926; --s2:#199e70; --bar:#3987e5; --bar-dim:#27415f; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--surface);color:var(--ink);font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:22px;margin:0 0 4px;font-weight:650}
+h2{font-size:14px;margin:0 0 2px;font-weight:650}
+.sub{color:var(--ink2);margin:0 0 12px}
+.badge{display:inline-block;font-size:11px;padding:2px 8px;border:1px solid var(--line);border-radius:99px;color:var(--ink2);margin-left:8px;vertical-align:middle}
+.banner{background:var(--accent-soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:0 0 14px;color:var(--ink2);font-size:13px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.kpi .v{font-size:26px;font-weight:650;letter-spacing:-.02em}
+.kpi .l{font-size:12.5px;color:var(--ink);margin-top:2px}
+.kpi .n{font-size:12px;color:var(--ink3);margin-top:2px}
+.grid{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-bottom:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;min-width:0}
+.card .hint{color:var(--ink3);font-size:12px;margin:0 0 8px}
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 8px}
+.seg button,.btn{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--card);color:var(--ink2);padding:4px 10px;cursor:pointer}
+.seg button:first-child{border-radius:8px 0 0 8px}.seg button:last-child{border-radius:0 8px 8px 0}
+.seg button+button{border-left:0}
+.seg button.on{background:var(--accent-soft);color:var(--ink);border-color:var(--accent)}
+.btn{border-radius:8px}
+.btn:disabled{opacity:.4;cursor:default}
+#map{position:relative}
+#map svg{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+#map circle{cursor:pointer}
+.legend{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink3);margin-top:6px}
+.legend .bar{flex:0 0 180px;height:8px;border-radius:4px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--surface);padding:6px 9px;border-radius:7px;font-size:12px;line-height:1.35;opacity:0;transition:opacity .08s;z-index:5;max-width:260px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 10px}
+.stat .v{font-size:18px;font-weight:650}.stat .l{font-size:11.5px;color:var(--ink3)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-weight:600;text-align:left;color:var(--ink3);font-size:11.5px;padding:4px 6px;border-bottom:1px solid var(--line)}
+td{padding:6px;border-bottom:1px solid var(--grid)}
+tr.row{cursor:pointer}tr.row:hover td{background:var(--grid)}tr.row.on td{background:var(--accent-soft)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.act{font-size:12px;color:var(--ink2);white-space:nowrap}
+.drv{margin:6px 0}.drv .t{font-size:12.5px;display:flex;justify-content:space-between;gap:8px}
+.drv .t span:last-child{color:var(--ink2);font-variant-numeric:tabular-nums}
+.pair{display:flex;gap:6px;align-items:center;margin-top:3px;font-size:11px;color:var(--ink3)}
+.pair .b{height:6px;border-radius:0 3px 3px 0;background:var(--bar)}
+.pair .c{height:6px;border-radius:0 3px 3px 0;background:var(--line)}
+.phone{width:250px;border:2px solid var(--ink3);border-radius:22px;padding:14px 10px 12px;margin:8px 0;background:var(--surface)}
+.notif{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 10px;font-size:12.5px}
+.notif .h{display:flex;justify-content:space-between;color:var(--ink3);font-size:11px;margin-bottom:3px}
+.notif.mute{opacity:.55}
+.why{font-size:12.5px;color:var(--ink2);margin:4px 0 0;padding-left:16px}
+.small{font-size:12px;color:var(--ink3)}
+.hb{display:grid;grid-template-columns:150px 1fr 52px;gap:8px;align-items:center;margin:6px 0;font-size:12.5px}
+.hb .track{height:12px}
+.hb .fill{height:12px;border-radius:0 4px 4px 0;background:var(--bar)}
+.hb .fill.dim{background:var(--bar-dim)}
+.hb .val{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.notes{font-size:12.5px;color:var(--ink2)}.notes li{margin:4px 0}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid,.grid3{grid-template-columns:1fr}.hb{grid-template-columns:120px 1fr 48px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Credit Radar <span class="badge">synthetic demo data</span></h1>
+  <p class="sub" id="subtitle"></p>
+  <div class="banner">All figures come from a synthetic Delhi payments panel generated for this prototype (8k users, 30 localities, 120 lanes). They show that the pipeline works. They are not evidence of real-world performance. Plug in Paytm data to get real numbers.</div>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Where credit demand is building (next 14 days)</h2>
+      <p class="hint">Colour = expected share of users who will take a loan, aggregated from user-level scores. Click a locality to zoom into its lanes (galis).</p>
+      <div class="controls">
+        <span class="small">Segment</span>
+        <span class="seg" id="segctl"></span>
+        <button class="btn" id="back" onclick="back()">&larr; City view</button>
+      </div>
+      <div id="map"></div>
+      <div class="legend"><span id="lmin"></span><div class="bar" id="lbar"></div><span id="lmax"></span><span style="margin-left:auto">Lane positions in zoom view are schematic</span></div>
+    </div>
+    <div class="card" id="detail"></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><h2>Does finer geography help?</h2><p class="hint">Share of future borrowers caught in the top 10% of scores (held-out last 6 weeks)</p><div id="abl"></div><p class="small" id="ablnote"></p></div>
+    <div class="card"><h2>How early can we see it?</h2><p class="hint">Share of borrowers caught in the top 10%, by days until they actually borrow</p><div id="lead"></div><p class="small">Offers are timed ~3 days before the predicted need, so 4+ days of lead matters.</p></div>
+    <div class="card"><h2>Guardrail funnel (live scoring)</h2><p class="hint">From everyone scored to offers that clear every check</p><div id="fun"></div></div>
+  </div>
+  <div class="grid3" style="grid-template-columns:1fr 2fr">
+    <div class="card"><h2>What drives the score</h2><p class="hint">Permutation importance (AUC drop)</p><div id="imp"></div></div>
+    <div class="card"><h2>Read this before presenting</h2>
+      <ul class="notes" id="notes"></ul></div>
+  </div>
+</div>
+<div id="tip"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const M = DATA.metrics, SEGN = ["Salaried","Gig worker","Merchant"], SEGC = ["var(--s0)","var(--s1)","var(--s2)"];
+let st = {seg:"all", loc:null, cell:null, user:null};
+const $ = id => document.getElementById(id);
+const pct = (v,d=1) => (v*100).toFixed(d)+"%";
+const inr = v => "₹"+Math.round(v).toLocaleString("en-IN");
+const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+const STOPS = ["#cde2fb","#9ec5f4","#6da7ec","#3987e5","#256abf","#184f95","#0d366b"];
+const RAMP = dark ? STOPS.slice().reverse() : STOPS;
+const hex = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16));
+function ramp(t){ t=Math.max(0,Math.min(1,t)); const x=t*(RAMP.length-1), i=Math.min(Math.floor(x),RAMP.length-2), f=x-i;
+  const a=hex(RAMP[i]), b=hex(RAMP[i+1]); return "rgb("+a.map((v,k)=>Math.round(v+(b[k]-v)*f)).join(",")+")"; }
+
+const metric = e => st.seg==="all" ? e.mean_need : e.need_by_seg[st.seg];
+
+// ---------------------------------------------------------------- KPIs
+function kpis(){
+  const f = M.full, af = M.area_forecast, fu = DATA.funnel, last = fu[fu.length-1].n, tot = fu[0].n;
+  const items = [
+    [pct(f.capture10,0), "of future borrowers sit in the top 10% of scores", `vs ${pct(M.rule_baseline.capture10,0)} for a simple low-balance rule and ${pct(M.random.capture10,0)} at random`],
+    [f.auc.toFixed(2), "ranking quality (AUC)", `time-split test, ${M.horizon_days}-day horizon, base rate ${pct(M.base_rate)}`],
+    ["r = "+af.r_model.toFixed(2), "lane-level forecast vs actual borrowing", `vs r = ${af.r_naive.toFixed(2)} for "who borrowed last month"; ${af.n_cell_weeks} lane-weeks`],
+    [last.toLocaleString("en-IN"), `offers clear every guardrail (${pct(last/tot)} of ${tot.toLocaleString("en-IN")})`, `need ≥ ${pct(DATA.meta.threshold,0)}, affordability, consent, no recent loan, frequency cap`]
+  ];
+  $("kpis").innerHTML = items.map(i => `<div class="kpi"><div class="v">${i[0]}</div><div class="l">${i[1]}</div><div class="n">${i[2]}</div></div>`).join("");
+  $("subtitle").textContent = `As of ${DATA.meta.asof}: who is likely to need credit in the next ${DATA.meta.horizon} days, by locality and lane. Next event on the calendar: ${DATA.meta.next_event} in ${DATA.meta.days_to_event} days.`;
+}
+
+// ---------------------------------------------------------------- map
+function entities(){
+  if(st.loc) return DATA.cells.filter(c => c.loc===st.loc);
+  return DATA.locs;
+}
+function renderMap(){
+  const W=680, H=500, ents = entities(), zoom = !!st.loc;
+  const vals = (zoom ? DATA.cells : DATA.locs).map(metric).filter(v => v!=null);
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  const col = e => { const v = metric(e); return v==null ? "var(--grid)" : ramp((v-lo)/(hi-lo||1)); };
+  let pos;
+  if(zoom){
+    const cl = DATA.locs.find(l => l.name===st.loc), SC = 40000;
+    pos = e => [W/2 + (e.lon-cl.lon)*SC, H/2 - (e.lat-cl.lat)*SC];
+  } else {
+    const la = DATA.locs.map(l=>l.lat), lo2 = DATA.locs.map(l=>l.lon), pad=40;
+    const a0=Math.min(...la), a1=Math.max(...la), o0=Math.min(...lo2), o1=Math.max(...lo2);
+    pos = e => [pad + (e.lon-o0)/(o1-o0)*(W-2*pad), pad + (a1-e.lat)/(a1-a0)*(H-2*pad)];
+  }
+  const rk = ents.slice().sort((a,b)=>(metric(b)??-1)-(metric(a)??-1));
+  const label = new Set(zoom ? ents.map(e=>e.id) : rk.slice(0,4).map(e=>e.name));
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Map of predicted credit demand">`;
+  for(const e of ents){
+    const [x,y] = pos(e), r = zoom ? 38 : 11;
+    const on = zoom ? st.cell===e.id : st.loc===e.name;
+    const m = metric(e);
+    const tip = `<b>${e.name}</b><br>${m==null?"no users in segment":pct(m)+" expected to borrow"}<br>${e.n} users · ${e.expected_seekers.toFixed(1)} expected borrowers`;
+    s += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${r}" fill="${col(e)}" stroke="${on?"var(--ink)":"var(--surface)"}" stroke-width="${on?3:2}" data-tip="${tip.replace(/"/g,"&quot;")}" onclick="${zoom?`pickCell('${e.id}')`:`pickLoc('${e.name.replace(/'/g,"\\'")}')`}"/>`;
+    if(zoom) s += `<text x="${x}" y="${y+5}" text-anchor="middle" font-size="15" font-weight="650" fill="${(m!=null&&(m-lo)/(hi-lo||1)>0.55)!==dark?"#fff":"var(--ink)"}" pointer-events="none">${e.id.split("-")[1]}</text>
+      <text x="${x}" y="${y+r+16}" text-anchor="middle" font-size="12" fill="var(--ink2)" pointer-events="none">${m==null?"–":pct(m)}</text>`;
+    else if(label.has(e.name)) s += `<text x="${x+r+4}" y="${y+4}" font-size="11" fill="var(--ink2)" stroke="var(--surface)" stroke-width="3" paint-order="stroke" pointer-events="none">${e.name}</text>`;
+  }
+  s += "</svg>";
+  $("map").innerHTML = s;
+  $("lmin").textContent = pct(lo); $("lmax").textContent = pct(hi);
+  $("lbar").style.background = `linear-gradient(90deg,${RAMP.join(",")})`;
+  $("back").disabled = !st.loc;
+}
+
+// ---------------------------------------------------------------- detail panel
+function statsHtml(e){
+  const m = metric(e);
+  return `<div class="stats">
+    <div class="stat"><div class="v">${e.n}</div><div class="l">users</div></div>
+    <div class="stat"><div class="v">${m==null?"–":pct(m)}</div><div class="l">expected to borrow</div></div>
+    <div class="stat"><div class="v">${e.offers}</div><div class="l">offers cleared</div></div>
+    <div class="stat"><div class="v">${e.wellbeing}</div><div class="l">wellbeing nudges</div></div></div>
+    <div class="small">Mix: ${e.seg_n.map((n,i)=>`<span class="dot" style="background:${SEGC[i]}"></span>${SEGN[i]} ${n}`).join(" &nbsp; ")}</div>`;
+}
+function drivers(e){
+  const c = DATA.city, mx = (a,b)=>Math.max(a,b,0.001);
+  const row = (t,v,cv) => `<div class="drv"><div class="t"><span>${t}</span><span>${pct(v,1)} vs city ${pct(cv,1)}</span></div>
+    <div class="pair"><div class="b" style="width:${v/mx(v,cv)*120}px"></div>area</div><div class="pair"><div class="c" style="width:${cv/mx(v,cv)*120}px"></div>city</div></div>`;
+  const ms = e.merch_in==null ? "" : `<div class="drv"><div class="t"><span>Merchant sales, last 7d vs 30d avg</span><span>${(e.merch_in*100).toFixed(1)}% vs city ${(c.merch_in*100).toFixed(1)}%</span></div></div>`;
+  return `<h2 style="margin-top:12px">Area signals (aggregated, never shown to customers)</h2>${ms}
+    ${row("Users with insufficient-fund declines (7d)", e.fail, c.fail)}${row("Users with peer-transfer credits (14d)", e.p2p, c.p2p)}`;
+}
+const ACT = {"Offer":"✓ Offer","Wellbeing nudge":"♡ Wellbeing","Suppress":"⦸ Suppressed","No action":"– No action"};
+function usersTable(c){
+  return `<h2 style="margin-top:12px">Highest-need users in this lane</h2>
+  <table><tr><th>User</th><th>Segment</th><th>Need</th><th>~Days</th><th>Decision</th></tr>
+  ${c.users.map(u=>`<tr class="row ${st.user===u.id?"on":""}" onclick="pickUser('${u.id}')"><td>${u.id}</td>
+    <td><span class="dot" style="background:${SEGC[u.seg]}"></span>${SEGN[u.seg]}</td><td>${pct(u.p,0)}</td><td>${u.d}</td><td class="act">${ACT[u.act]}</td></tr>`).join("")}</table>`;
+}
+function preview(c){
+  const u = c.users.find(x=>x.id===st.user); if(!u) return "";
+  let body;
+  if(u.act==="Offer"){
+    const when = u.send===0 ? "today" : `in ${u.send} day${u.send>1?"s":""}`;
+    body = `<div class="notif"><div class="h"><b>Paytm</b><span>${when}</span></div>${u.msg}</div>`;
+    body += `<div class="small">${u.viol.length? "⚠ Copy check failed: "+u.viol.join("; ") : "✓ Copy passes compliance lint (no urgency, no inferred distress, KFS + choice wording)"}<br>Lender (placeholder): ${u.lender} · suggested ₹${u.amt.toLocaleString("en-IN")}</div>`;
+  } else if(u.act==="Wellbeing nudge"){
+    body = `<div class="notif mute"><div class="h"><b>Paytm</b><span>-</span></div>No loan offer. Shown instead: bill reminders and split-payment tips.</div>`;
+  } else body = `<div class="notif mute"><div class="h"><b>Paytm</b><span>-</span></div>No message will be sent.</div>`;
+  return `<h2 style="margin-top:12px">${u.id}: decision and message</h2>
+    <div class="phone">${body}</div>
+    <div class="small"><b>Decision:</b> ${ACT[u.act]}. ${u.why}.<br>Income (30d) ${inr(u.inflow)} · EMI load ${pct(u.foir,0)} of inflow</div>
+    <div class="small" style="margin-top:6px"><b>Why the model flagged this user</b> (internal audit trail, never shown to the customer):</div>
+    <ul class="why">${u.reasons.length? u.reasons.map(r=>`<li>${r.text}</li>`).join("") : "<li>No single dominant driver</li>"}</ul>`;
+}
+function laneList(cs){
+  return `<table><tr><th>Lane</th><th>Users</th><th>Expected to borrow</th><th>Offers</th></tr>${cs.map(c=>{const m=metric(c);
+    return `<tr class="row" onclick="pickCell('${c.id}')"><td>${c.name}</td><td>${c.n}</td><td>${m==null?"–":pct(m)}</td><td>${c.offers}</td></tr>`}).join("")}</table>`;
+}
+function renderDetail(){
+  let h;
+  if(!st.loc){
+    const top = DATA.cells.slice().sort((a,b)=>(metric(b)??-1)-(metric(a)??-1)).slice(0,12);
+    h = `<h2>Top lanes city-wide</h2><p class="hint">Highest expected borrowing share${st.seg==="all"?"":" among "+SEGN[st.seg].toLowerCase()+" users"}. Click a locality on the map to drill in.</p>${laneList(top)}`;
+  } else if(!st.cell){
+    const l = DATA.locs.find(x=>x.name===st.loc);
+    h = `<h2>${l.name}</h2>${statsHtml(l)}<h2 style="margin-top:12px">Lanes</h2>${laneList(entities())}${drivers(l)}`;
+  } else {
+    const c = DATA.cells.find(x=>x.id===st.cell);
+    h = `<h2>${c.name}</h2>${statsHtml(c)}${drivers(c)}${usersTable(c)}${preview(c)}`;
+  }
+  $("detail").innerHTML = h;
+}
+
+// ---------------------------------------------------------------- static charts
+function hbars(rows, max, dimIdx=[]){
+  return rows.map((r,i)=>`<div class="hb" data-tip="${r.tip||""}"><span>${r.l}</span><div class="track"><div class="fill ${dimIdx.includes(i)?"dim":""}" style="width:${(r.v/max*100).toFixed(1)}%"></div></div><span class="val">${r.t}</span></div>`).join("");
+}
+function staticCharts(){
+  const ab = M.ablation;
+  const rows = [{l:"Random",v:M.random.capture10,t:pct(M.random.capture10,0)},{l:"Simple low-balance rule",v:M.rule_baseline.capture10,t:pct(M.rule_baseline.capture10,0)},
+    ...ab.map(a=>({l:a.name,v:a.capture10,t:pct(a.capture10,1),tip:`AUC ${a.auc.toFixed(3)} · Merchant AUC ${a.seg_auc.Merchant.toFixed(3)}`}))];
+  $("abl").innerHTML = hbars(rows, 0.6, [0,1]);
+  const aucs = ab.map(a=>a.auc.toFixed(3)).join(" → ");
+  $("ablnote").innerHTML = `AUC ${aucs}. The three model rows differ by less than run-to-run noise. In this data, finer geography adds little to <i>individual</i> scores. Its value is the aggregated lane forecast (r = ${M.area_forecast.r_model.toFixed(2)}). Re-run this ablation on real data before collecting anything finer than pincode.`;
+  $("lead").innerHTML = hbars(M.lead_time.map(x=>({l:x.bucket.replace("needs loan in ","borrows in "),v:x.captured,t:pct(x.captured,0),tip:`n=${x.n}`})), 0.8);
+  const fu = DATA.funnel, mx = fu[0].n;
+  $("fun").innerHTML = hbars(fu.map(f=>({l:f.step.replace(" -> OFFER",""),v:f.n,t:f.n.toLocaleString("en-IN")})), mx);
+  const NM = {bal_runway:"Cash runway",bal_min14_ratio:"Balance low point (14d)",fails_7:"Declines this week",fails_30:"Declines (30d)",p2p_cnt_14:"Peer credits (14d)",p2p_amt_ratio:"Peer credits / inflow",in_trend:"Inflow trend",out_trend:"Spend trend",net_30_ratio:"Net cash flow",days_to_event:"Days to event",dom:"Day of month",foir:"EMI load",days_since_loan:"Days since last loan",loans_90:"Loans in 90d",inflow_cv_60:"Income volatility",inflow_30:"Inflow (30d)",outflow_30:"Outflow (30d)",inflow_7:"Inflow (7d)",outflow_7:"Outflow (7d)",bal_now:"Balance",txn_trend:"Txn trend",event_weight:"Event weight"};
+  const nm = f => NM[f] || (f.startsWith("gali_")?"Lane: "+f.slice(5).replace(/_/g," "):f.startsWith("loc_")?"Locality: "+f.slice(4).replace(/_/g," "):f);
+  const im = M.importance.slice(0,8), im0 = im[0].v;
+  $("imp").innerHTML = hbars(im.map(i=>({l:nm(i.f),v:i.v,t:i.v.toFixed(3)})), im0);
+  $("notes").innerHTML = [
+    "<b>Synthetic data.</b> Metrics show the pipeline works, not how Paytm data will behave. The 'peer borrowing contagion' in the generator is an assumption we made, and real data may not show it.",
+    "<b>Gali is a view, not (yet) a feature.</b> Aggregating user-level scores to lanes forecasts demand well; adding lane features to individual scores showed no reliable lift here. Validate on real data. Fall back to pincode if lanes add nothing.",
+    "<b>Distribution, not underwriting.</b> Paytm distributes loans; lending partners underwrite and approve. The affordability gate is a pre-screen to be replaced by partner credit policy.",
+    "<b>Need ≠ eligibility.</b> High-need users who fail the affordability screen get a wellbeing path with no credit offer. Customer copy never mentions balance, spending or neighbours.",
+    "<b>Compliance to confirm with counsel:</b> RBI Digital Lending Directions 2025 (consent, need-based data, KFS), DPDP Rules 2025 (notice and consent, staged to May 2027), and k-anonymity for area views (lanes under 30 users are suppressed)."
+  ].map(x=>`<li>${x}</li>`).join("");
+}
+
+// ---------------------------------------------------------------- interactions
+function pickLoc(n){ st.loc=n; st.cell=null; st.user=null; renderAll(); }
+function pickCell(id){ st.cell=id; st.user=null; const c=DATA.cells.find(x=>x.id===id); st.loc=c.loc; renderAll(); }
+function pickUser(id){ st.user=id; renderDetail(); }
+function back(){ st.loc=null; st.cell=null; st.user=null; renderAll(); }
+function setSeg(s){ st.seg=s; renderAll(); }
+function renderSeg(){
+  const o=[["all","All"],[0,"Salaried"],[1,"Gig"],[2,"Merchants"]];
+  $("segctl").innerHTML = o.map(([k,l])=>`<button class="${st.seg===k?"on":""}" onclick="setSeg(${typeof k==="string"?`'${k}'`:k})">${l}</button>`).join("");
+}
+function renderAll(){ renderSeg(); renderMap(); renderDetail(); }
+const tip = $("tip");
+document.addEventListener("mouseover", e => { const t = e.target.closest("[data-tip]"); if(t && t.dataset.tip){ tip.innerHTML=t.dataset.tip; tip.style.opacity=1; } });
+document.addEventListener("mousemove", e => { tip.style.left=Math.min(e.clientX+14, innerWidth-270)+"px"; tip.style.top=(e.clientY+14)+"px"; });
+document.addEventListener("mouseout", e => { if(e.target.closest("[data-tip]")) tip.style.opacity=0; });
+
+kpis(); staticCharts(); renderAll();
+</script>
+</body>
+</html>
